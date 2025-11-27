@@ -1,0 +1,35 @@
+def main():
+    opcao = ""
+    sub = ""
+    
+    print("=== SISTEMA CLÍNICA - CRUD MÉDICOS E PACIENTES ===")
+    
+    while opcao != "0":
+        print("\nMenu Principal:")
+        print("1 - Médicos")
+        print("2 - Pacientes")
+        print("0 - Sair")
+        opcao = input("Escolha: ")
+        
+        if opcao == "1":
+            print("\n--- CRUD MÉDICOS ---")
+            print("1 - Cadastrar Médico")
+            print("2 - Listar Médicos")
+            print("3 - Atualizar Médico")
+            print("4 - Excluir Médico")
+            sub = input("Escolha: ")
+            print("Operação executada no Banco de Dados (Médicos)")
+            
+        elif opcao == "2":
+            print("\n--- CRUD PACIENTES ---")
+            print("1 - Cadastrar Paciente")
+            print("2 - Listar Pacientes")
+            print("3 - Atualizar Paciente")
+            print("4 - Excluir Paciente")
+            sub = input("Escolha: ")
+            print("Operação executada no Banco de Dados (Pacientes)")
+    
+    print("Sistema finalizado.")
+
+if __name__ == "__main__":
+    main()

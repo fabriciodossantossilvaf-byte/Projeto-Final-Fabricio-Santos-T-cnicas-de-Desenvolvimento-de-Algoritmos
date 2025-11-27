@@ -1,0 +1,90 @@
+PSEUDOCÓDIGO - SISTEMA CRUD CLÍNICA
+
+INICIAR SISTEMA
+  CONECTAR(BANCO_DE_DADOS)
+
+  REPETIR
+    MOSTRAR "MENU PRINCIPAL"
+    MOSTRAR "1 - Gerenciar MÉDICOS"
+    MOSTRAR "2 - Gerenciar PACIENTES"
+    MOSTRAR "0 - Sair"
+    LER opcao
+
+    SE opcao = 1 ENTÃO
+      MOSTRAR "MENU MÉDICOS"
+      MOSTRAR "1 - Cadastrar Médico"
+      MOSTRAR "2 - Listar Médicos"
+      MOSTRAR "3 - Editar Médico"
+      MOSTRAR "4 - Excluir Médico"
+      MOSTRAR "0 - Voltar"
+      LER acaoM
+
+      SE acaoM = 1 ENTÃO
+        SOLICITAR nome, crm, especialidade
+        INSERIR INTO medicos(nome, crm, especialidade)
+        MOSTRAR "Médico cadastrado com sucesso!"
+
+      SENÃO SE acaoM = 2 ENTÃO
+        registros <- SELECIONAR * FROM medicos
+        EXIBIR registros
+
+      SENÃO SE acaoM = 3 ENTÃO
+        SOLICITAR id_medico
+        registro <- SELECIONAR * FROM medicos WHERE id = id_medico
+        SE registro existir ENTÃO
+          SOLICITAR novos_valores
+          ATUALIZAR medicos SET ... WHERE id = id_medico
+          MOSTRAR "Atualizado com sucesso!"
+        SENÃO
+          MOSTRAR "Médico não encontrado."
+        FIM SE
+
+      SENÃO SE acaoM = 4 ENTÃO
+        SOLICITAR id_medico
+        EXCLUIR FROM medicos WHERE id = id_medico
+        MOSTRAR "Médico excluído."
+
+      FIM SE
+
+    SENÃO SE opcao = 2 ENTÃO
+      MOSTRAR "MENU PACIENTES"
+      MOSTRAR "1 - Cadastrar Paciente"
+      MOSTRAR "2 - Listar Pacientes"
+      MOSTRAR "3 - Editar Paciente"
+      MOSTRAR "4 - Excluir Paciente"
+      MOSTRAR "0 - Voltar"
+      LER acaoP
+
+      SE acaoP = 1 ENTÃO
+        SOLICITAR nome, cpf, telefone, data_nascimento
+        INSERIR INTO pacientes(nome, cpf, telefone, data_nascimento)
+        MOSTRAR "Paciente cadastrado com sucesso!"
+
+      SENÃO SE acaoP = 2 ENTÃO
+        registros <- SELECIONAR * FROM pacientes
+        EXIBIR registros
+
+      SENÃO SE acaoP = 3 ENTÃO
+        SOLICITAR id_paciente
+        registro <- SELECIONAR * FROM pacientes WHERE id = id_paciente
+        SE registro existir ENTÃO
+          SOLICITAR novos_valores
+          ATUALIZAR pacientes SET ... WHERE id = id_paciente
+          MOSTRAR "Atualizado com sucesso!"
+        SENÃO
+          MOSTRAR "Paciente não encontrado."
+        FIM SE
+
+      SENÃO SE acaoP = 4 ENTÃO
+        SOLICITAR id_paciente
+        EXCLUIR FROM pacientes WHERE id = id_paciente
+        MOSTRAR "Paciente excluído."
+
+      FIM SE
+
+    FIM SE
+
+  ATÉ opcao = 0
+
+  DESCONECTAR(BANCO_DE_DADOS)
+FINALIZAR SISTEMA

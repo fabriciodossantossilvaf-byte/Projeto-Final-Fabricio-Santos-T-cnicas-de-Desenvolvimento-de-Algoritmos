@@ -1,0 +1,100 @@
+ALGORITMO CRUD_CLINICA
+VAR
+  opcao, acaoM, acaoP : INTEIRO
+  id_medico, id_paciente : INTEIRO
+  registro : REGISTRO
+
+INICIO
+  CHAMAR conectarBD()
+
+  REPEAT
+    ESCREVER "=== MENU PRINCIPAL ==="
+    ESCREVER "1 - Médicos"
+    ESCREVER "2 - Pacientes"
+    ESCREVER "0 - Sair"
+    LER opcao
+
+    SE opcao = 1 ENTAO
+      ESCREVER "== MENU MÉDICOS =="
+      ESCREVER "1 - Cadastrar"
+      ESCREVER "2 - Listar"
+      ESCREVER "3 - Editar"
+      ESCREVER "4 - Excluir"
+      ESCREVER "0 - Voltar"
+      LER acaoM
+
+      SE acaoM = 1 ENTAO
+        CHAMAR cadastrarMedico()
+      SENAO SE acaoM = 2 ENTAO
+        CHAMAR listarMedicos()
+      SENAO SE acaoM = 3 ENTAO
+        ESCREVER "Informe o ID do médico:"
+        LER id_medico
+        CHAMAR editarMedico(id_medico)
+      SENAO SE acaoM = 4 ENTAO
+        ESCREVER "Informe o ID do médico:"
+        LER id_medico
+        CHAMAR excluirMedico(id_medico)
+      FIM SE
+
+    SENAO SE opcao = 2 ENTAO
+      ESCREVER "== MENU PACIENTES =="
+      ESCREVER "1 - Cadastrar"
+      ESCREVER "2 - Listar"
+      ESCREVER "3 - Editar"
+      ESCREVER "4 - Excluir"
+      ESCREVER "0 - Voltar"
+      LER acaoP
+
+      SE acaoP = 1 ENTAO
+        CHAMAR cadastrarPaciente()
+      SENAO SE acaoP = 2 ENTAO
+        CHAMAR listarPacientes()
+      SENAO SE acaoP = 3 ENTAO
+        ESCREVER "Informe o ID do paciente:"
+        LER id_paciente
+        CHAMAR editarPaciente(id_paciente)
+      SENAO SE acaoP = 4 ENTAO
+        ESCREVER "Informe o ID do paciente:"
+        LER id_paciente
+        CHAMAR excluirPaciente(id_paciente)
+      FIM SE
+
+    FIM SE
+
+  UNTIL opcao = 0
+
+  CHAMAR desconectarBD()
+FIM_ALGORITMO
+
+FUNCAO cadastrarMedico()
+  VAR nome, crm, especialidade : CADEIA
+  ESCREVER "Nome:"
+  LER nome
+  ESCREVER "CRM:"
+  LER crm
+  ESCREVER "Especialidade:"
+  LER especialidade
+  EXECUTAR SQL "INSERT INTO medicos(nome,crm,especialidade) VALUES (...)"
+FIM_FUNCAO
+
+FUNCAO listarMedicos()
+  registros <- EXECUTAR SQL "SELECT * FROM medicos"
+  PARA CADA registro EM registros FAÇA
+    ESCREVER registro.id, registro.nome, registro.crm, registro.especialidade
+  FIM_PARA
+FIM_FUNCAO
+
+FUNCAO editarMedico(id)
+  registro <- EXECUTAR SQL "SELECT * FROM medicos WHERE id = id"
+  SE registro NÃO VAZIO ENTAO
+    ESCREVER "Novo nome (enter para manter):"
+    LER novoNome
+    ...
+    EXECUTAR SQL "UPDATE medicos SET ... WHERE id = id"
+  SENAO
+    ESCREVER "Médico não encontrado."
+  FIM_SE
+FIM_FUNCAO
+
+-- Funções de paciente seguem lógica análoga --
